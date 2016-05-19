@@ -1,0 +1,57 @@
+@import "../color";
+
+@menu-height: 30px;
+
+.menu-strip {
+	height: @menu-height;
+	background-color: @menu-strip;
+	display: flex;
+	color: @white;
+
+	.logo {
+		width: 100px;
+		line-height: @menu-height;
+		padding: 0 0 0 10px;
+	}
+	.toolbar {
+		flex: 1;
+		text-align: right;
+
+		> * {
+			height: @menu-height;
+			display: inline-block;
+			vertical-align: top;
+
+			&.icon-manage {
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+			&.search-box {
+				height: @menu-height;
+				padding: 3px 0;
+				position: relative;
+
+				.ic {
+					position: absolute;
+					left: 2px;
+					top: 8px;
+					opacity: 0.6;
+				}
+				input {
+					height: (@menu-height - 6px);
+					background-color: transparent;
+					border: 0;
+					outline: none;
+					cursor: pointer;
+					color: @white;
+					padding: 0 0 0 20px;
+					border-bottom: 1px solid @search-border;
+
+					&:focus, &:hover {
+						background-color: @search-focus;
+					}
+				}
+			}
+		}
+	}
+}
