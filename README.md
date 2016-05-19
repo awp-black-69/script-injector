@@ -1,9 +1,9 @@
-# React/Chrome App Boiler Plate (Replace with APP NAME) #
+# Script Injector #
 
 
 ### What is this repository for? ###
 
-Basic boiler plate for quickly getting started with Chrome-react app.
+Chrome extension for injecting scripts into page.
 
 ### Getting started ###
 
