@@ -25,6 +25,18 @@
 			&.icon-manage {
 				padding: 5px 10px;
 				cursor: pointer;
+
+				&:hover {
+					.ic {
+						transform-origin: 50% 50%;
+						-webkit-transform: rotate(60deg);
+						transform: rotate(60deg);
+					}
+				}
+				.ic {
+					-webkit-transition: all 0.2s ease-out;
+					transition: all 0.2s ease-out;
+				}
 			}
 			&.search-box {
 				height: @menu-height;
@@ -36,6 +48,9 @@
 					left: 2px;
 					top: 8px;
 					opacity: 0.6;
+					transform-origin: 6px 6px;
+					//-webkit-transition: all 0.2s ease-out;
+					//transition: all 0.2s ease-out;
 				}
 				input {
 					height: (@menu-height - 6px);

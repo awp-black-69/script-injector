@@ -28,7 +28,7 @@ gulp.task('style', function(){
 });
 
 gulp.task('browserify', function(){
-	if(!argv.prod) gulp.watch(['js/**', 'config/**'], ['browserify']);
+	if(!argv.prod) gulp.watch(['js/**', 'config/**'], ['browserify', 'browserify-content-script']);
 	if(!argv.prod) gulp.watch(statics, ['init']);
 
 	return browserify({debug: !argv.prod})
@@ -41,6 +41,16 @@ gulp.task('browserify', function(){
 		.pipe(gulp.dest('./build/js'));
 });
 
+gulp.task('browserify-content-script', function () {
+	return browserify({debug: !argv.prod})
+		.add('js/content-script/index.js')
+		.bundle()
+		.pipe(source('content-script.js'))
+		.pipe(buffer())
+		.pipe(gulpIf(argv.prod, gulpUglify()))
+		.pipe(gulp.dest('./build/js'));
+});
+
 gulp.task('init', ['statics']);
 
-gulp.task('build', ['browserify', 'style']);
+gulp.task('build', ['browserify', 'browserify-content-script', 'style']);
