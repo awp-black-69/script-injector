@@ -27,11 +27,6 @@ var MenuStrip = React.createClass({
 	},
 
 	render: function () {
-
-		chrome.tabs.query({active: true, lastFocusedWindow: true}, function (tab) {
-			console.log(window.ttt  = tab);
-		});
-
 		// su
 		// 	.get('https://code.jquery.com/jquery-1.12.3.min.js')
 		// 	.then(function (data) {

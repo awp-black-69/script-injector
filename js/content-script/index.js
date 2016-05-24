@@ -25,6 +25,10 @@ function loadScriptDom(tag, data, cb) {
 	el.setAttribute('data-master-id', data.id);
 	el.setAttribute('is-loading', "true");
 
+	if(data.data) {
+		el.innerHTML = (data.data || '').replace(/\/\*.+\*\//g, '');
+	}
+
 	el.onload = function () {
 		el.removeAttribute('is-loading');
 		cb(null, true);
@@ -41,7 +45,6 @@ function loadJs(data, cb) {
 	el.setAttribute('type', 'text/javascript');
 
 	if(data.data) {
-		el.innerHTML = data.data;
 		el.onload();
 	} else {
 		el.setAttribute('src', data.url);
@@ -54,7 +57,6 @@ function loadCss(data, cb) {
 	el.setAttribute('type', 'text/css');
 
 	if(data.data) {
-		el.innerHTML = data.data;
 		el.onload();
 	} else {
 		el.setAttribute('href', data.url);

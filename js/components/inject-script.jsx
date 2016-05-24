@@ -31,6 +31,7 @@ var InjectScript = React.createClass({
 			superAgent
 				.get(url)
 				.end(function (err, resp) {
+					console.log("LEN",resp.text.length);
 					chrome.tabs.sendMessage(tabs[0].id, {action: "register", url: url, id: id, data: resp.text}, function (result) {
 						if(scriptTimeout) {
 							clearTimeout(scriptTimeout);
@@ -91,11 +92,9 @@ var InjectScript = React.createClass({
 		var script = this.props.data
 			,isLoaded;
 
-		console.log(this.props.loadedScripts, '==', script);
 		isLoaded = _.find(this.props.loadedScripts, function (loadedScriptId) {
 			return loadedScriptId == script.id;
 		});
-		console.log(isLoaded);
 
 		return (
 			<div className="script-injector">
