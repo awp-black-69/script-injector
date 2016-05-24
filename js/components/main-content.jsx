@@ -10,21 +10,52 @@ var Loader = require('./loader.jsx')
 var MainContent = React.createClass({
 	getInitialState: function () {
 		return {
-			
+			loadedScripts: null,
+			scripts: null
 		};
 	},
 
+	filter: function (script) {
+		var filter = (this.props.filter || '').toLowerCase();
+
+		return (
+			~script.url.toLowerCase().indexOf(filter) ||
+			~script.name.toLowerCase().indexOf(filter)
+		);
+	},
 	getScriptList: function () {
 		var self = this
-			,scriptsEl;
-
-		console.log("SSSS", self.state.loadedScripts);
+			,scriptsEl
+			,hasData = false;
 
 		scriptsEl = _.map(this.state.scripts, function (script) {
+			if(!self.filter(script)) {
+				return null;
+			}
+
+			hasData = true;
 			return (
 				<InjectScript data={script} loadedScripts={self.state.loadedScripts} key={script.id} />
 			);
 		});
+
+		if(!hasData) {
+			scriptsEl = (
+				<div>
+					{
+						this.state.scripts.length ?
+						<div className="no-saved-script">
+							No result.
+						</div> :
+						<div className="no-saved-script">
+							There are no saved script.
+							<br/>
+							Add scripts in <a href="/index.html#options" target="_blank">option</a> page.
+						</div>
+					}
+				</div>
+			);
+		}
 
 		return scriptsEl;
 	},
@@ -69,7 +100,6 @@ var MainContent = React.createClass({
 		];
 
 		async.parallel(tasks, function (errs, results) {
-			console.log("Res", results);
 			self.setState({
 				scripts: results[0],
 				loadedScripts: results[1]
