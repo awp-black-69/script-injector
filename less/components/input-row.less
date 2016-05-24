@@ -26,6 +26,20 @@
 	}
 	.pair-value {
 		flex: 1;
+
+		input.errored {
+			border-color: @red;
+
+			& + .err-msg {
+				display: block;
+			}
+		}
+	}
+	.err-msg {
+		display: none;
+		color: @red;;
+		padding-top: 5px;
+		font-size: 0.8em;
 	}
 	.actions {
 		width: 35px;

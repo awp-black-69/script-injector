@@ -1,26 +1,65 @@
 var _ = require('underscore')
 	,React = require('react');
 
+var validator = require('../helper/validator');
+
 var InputRow = React.createClass({
 	getInitialState: function () {
 		return {
 			pairKey: null,
-			pairValue: null
+			keyError: null,
+			pairValue: null,
+			valueError: null
 		};
 	},
 
+	validateValue: function (value, silent) {
+		var validations
+			,hasError = false;
+
+		validations = _.at(this.props, 'data.value.validations');
+
+		console.log(validations);
+
+		for(var i=0; i<validations.length; i++) {
+			console.log(validator(validations[i], value));
+			if(!validator(validations[i], value)) {
+				hasError = true;
+				if(!silent) {
+					this.setState({
+						valueError: validations[i].message
+					});
+				}
+				break;
+			}
+		}
+
+		if(!hasError) {
+			this.setState({
+				valueError: null
+			});
+		}
+
+		return !hasError;
+	},
 	keyChanged: function (e) {
 		this.changed({
 			pairKey: e.target.value.trim()
 		});
 	},
 	valueChanged: function (e) {
+		this.validateValue(e.target.value.trim());
 		this.changed({
 			pairValue: e.target.value.trim()
 		});
 	},
 	changed: function (data) {
 		this.setState(data);
+
+		if(!this.validateValue(this.state.pairValue, true)) {
+			return;
+		}
+
 		this.props.onChange && this.props.onChange({
 			id: _.at(this.props, 'data.id', Date.now()),
 			key: data.pairKey || this.state.pairKey,
@@ -56,7 +95,8 @@ var InputRow = React.createClass({
 					<input placeholder={_.at(this.props, 'data.key.hint')} value={this.state.pairKey} onChange={this.keyChanged} onFocus={this.focused} onBlur={this.blured} autoFocus={this.props.isLast ? true : false} />
 				</div>
 				<div className="pair-value">
-					<input placeholder={_.at(this.props, 'data.value.hint')} value={this.state.pairValue} onChange={this.valueChanged} onFocus={this.focused} onBlur={this.blured} />
+					<input className={this.state.valueError ? "errored" : ""} placeholder={_.at(this.props, 'data.value.hint')} value={this.state.pairValue} onChange={this.valueChanged} onFocus={this.focused} onBlur={this.blured} />
+					<div className="err-msg">{this.state.valueError}</div>
 				</div>
 				<div className="actions">
 					<div className="delete" title="Delete" onClick={this.deleteItem}>

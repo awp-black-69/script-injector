@@ -7,7 +7,7 @@ var InputRow = require('./components/InputRow.jsx')
 var store = require('./core/store');
 
 var PAIR_KEY_HINT = "Name"
-	,PAIR_VALUE_HINT = "URL";
+	,PAIR_VALUE_HINT = "URL http://www.example.com/path/to/script.js";
 
 var emptyRowData = {
 	key: {
@@ -85,7 +85,14 @@ var Options = React.createClass({
 					},
 					value: {
 						text: script.url,
-						hint: PAIR_VALUE_HINT
+						hint: PAIR_VALUE_HINT,
+						validations: [
+							{
+								name: "pattern",
+								pattern: "^https*://",
+								message: "Please use the fully qualified URL"
+							}
+						]
 					}
 				};
 			});
