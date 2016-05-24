@@ -19,10 +19,7 @@ var InputRow = React.createClass({
 
 		validations = _.at(this.props, 'data.value.validations');
 
-		console.log(validations);
-
 		for(var i=0; i<validations.length; i++) {
-			console.log(validator(validations[i], value));
 			if(!validator(validations[i], value)) {
 				hasError = true;
 				if(!silent) {
