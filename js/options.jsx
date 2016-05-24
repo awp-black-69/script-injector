@@ -21,7 +21,8 @@ var emptyRowData = {
 var Options = React.createClass({
 	getInitialState: function () {
 		return {
-			scripts: null
+			scripts: null,
+			hasScrolled: false
 		};
 	},
 	createNew: function () {
@@ -106,10 +107,23 @@ var Options = React.createClass({
 		);
 
 		return (
-			<div className="script-list">
+			<div className="script-list" onScroll={this.scriptScroll}>
 				{scriptsEls}
 			</div>
 		);
+	},
+	scriptScroll: function (e) {
+		var target = e.currentTarget;
+
+		if(target.scrollTop == 0) {
+			this.setState({
+				hasScrolled: false
+			});
+		} else {
+			!this.state.hasScrolled && this.setState({
+				hasScrolled: true
+			});
+		}
 	},
 	componentDidMount: function () {
 		var self = this;
@@ -124,15 +138,20 @@ var Options = React.createClass({
 	render: function () {
 		return (
 			<div className="options">
-				<div className="wrapper">
+				<div className={"wrapper" + (this.state.hasScrolled ? " has-scrolled" : "")}>
 					<div className="heading">
 						<h1>Manage your scripts</h1>
 					</div>
 					{
 						this.state.scripts ?
 							this.getScriptList() :
-							<Loader />
+							<div className="script-list">
+								<Loader />
+							</div>
 					}
+					<div className="footing">
+						We would love to hear from you. Please provide your <a href="https://docs.google.com/forms/d/11I1LNhTdMb0lnAPKJViftEVbHLs4_RVRq6RHiN9evPg/viewform">feedback</a>.
+					</div>
 				</div>
 			</div>
 		);

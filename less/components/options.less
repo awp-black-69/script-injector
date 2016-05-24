@@ -16,7 +16,39 @@
 		height: 100%;
 		margin: 0 auto;
 		background-color: @white;
-		overflow: auto;
-		padding-bottom: 40px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+
+		&.has-scrolled {
+			.heading {
+				-webkit-box-shadow: 0 0 6px 0 @shadow;
+				box-shadow: 0 0 6px 0 @shadow;
+			}
+		}
+		.heading {
+			height: 61px;
+			position: relative;
+			z-index: 1;
+			-webkit-transition: all 0.2s ease-out;
+			transition: all 0.2s ease-out;
+		}
+		.script-list {
+			flex: 1;
+			overflow: auto;
+			padding-bottom: 20px;
+		}
+		.footing {
+			padding: 20px 10px;
+			background-color: @footer-bg;
+			text-align: right;
+			color: @dark-theme-text;
+
+			a {
+				color: @dark-theme-light;
+				font-weight: bold;
+				text-decoration: none;
+			}
+		}
 	}
 }
