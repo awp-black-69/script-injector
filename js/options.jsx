@@ -6,6 +6,8 @@ var InputRow = require('./components/InputRow.jsx')
 
 var store = require('./core/store');
 
+require('./helper/for-nerds')();
+
 var PAIR_KEY_HINT = "Name"
 	,PAIR_VALUE_HINT = "URL http://www.example.com/path/to/script.js";
 
@@ -149,7 +151,7 @@ var Options = React.createClass({
 								<Loader />
 							</div>
 					}
-					<div className="footing">
+					<div className="footing" style={{display: 'none'}}>
 						We would love to hear from you. Please provide your <a href="https://docs.google.com/forms/d/11I1LNhTdMb0lnAPKJViftEVbHLs4_RVRq6RHiN9evPg/viewform">feedback</a>.
 					</div>
 				</div>
