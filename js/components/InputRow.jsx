@@ -53,10 +53,6 @@ var InputRow = React.createClass({
 	changed: function (data) {
 		this.setState(data);
 
-		if(!this.validateValue(this.state.pairValue, true)) {
-			return;
-		}
-
 		this.props.onChange && this.props.onChange({
 			id: _.at(this.props, 'data.id', Date.now()),
 			key: data.pairKey || this.state.pairKey,
